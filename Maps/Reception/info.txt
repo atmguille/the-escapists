@@ -1,0 +1,9 @@
+100 50
+3
+Corridor2 33 150 243 215 80 0
+Guards 255 87 34 42 100 1950
+Outdoors 255 152 0 150 114 0
+Welcome to the reception. Beware of the dog"
+1
+Without the Key you cannot cross the door.
+You are close to escaping!" 255 152 0 Key 

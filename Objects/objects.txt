@@ -1,0 +1,8 @@
+7
+Bat Yard 210 60 0 This makes me stronger!"
+Knife Canteen 100 30 0 A good way to defy the authority"
+Key Guards 207 65 0 This key may open a very important door"
+Ladder Maintenance 150 40 0 This may be useful to climb a wall"
+Screwdriver Maintenance 75 60 0 I may open the door with this"
+ShowerStick WC 205 60 0 Manufactured in 1950. This number may be useful"
+Shovel Telephone 200 100 0 This may help digging a hole somewhere"

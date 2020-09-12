@@ -1,0 +1,5 @@
+42 100
+1
+Reception 249 168 37 55 25 0
+Wow you are in the guards room!"
+0

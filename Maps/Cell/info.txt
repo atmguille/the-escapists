@@ -1,0 +1,8 @@
+100 50
+2
+Corridor 255 152 0 103 60 1231
+Tunnel 33 150 243 10 47 0
+Maybe the previous prisioner left the door
+code somewhere"
+1
+Uhhh...if I had a shovel I may dig a tunnel here" 33 150 243 Shovel

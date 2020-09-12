@@ -1,0 +1,9 @@
+100 120
+3
+Telephone 255 235 59 210 60 0
+Hall 2 136 209 60 105 0
+Outdoors 213 0 249 150 114 0
+You are in the yard. Try to make some friends"
+1
+You need some help to climb this wall. 
+Trump did a good job. A ladder may help" 213 0 249 Ladder

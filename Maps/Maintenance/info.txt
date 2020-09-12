@@ -1,0 +1,6 @@
+120 100
+1
+Hall 156 39 176 220 8 0
+Shit, the door closed, I will need something to open it"
+1
+Upps, the door closed after me. I need something to open it" 156 39 176 Screwdriver

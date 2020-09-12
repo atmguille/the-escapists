@@ -1,0 +1,6 @@
+100 50
+1
+Hall 255 87 34 30 80 0
+It would be nice to get that knife, but I need a blunt weapon to kill that boy first"
+1
+You need a blunt weapon to kill Noah" 0 255 0 Bat

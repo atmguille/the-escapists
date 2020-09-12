@@ -1,0 +1,6 @@
+20 50
+2
+Reception 255 87 34 15 65 0
+Hall 63 81 181 215 95 0
+Try to avoid the fireballs!"
+0

@@ -1,0 +1,6 @@
+10 47
+2
+Cell 255 152 0 100 80 0
+Outdoors 63 81 181 150 114 0
+You have discovered a tunnel"
+0

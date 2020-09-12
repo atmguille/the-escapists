@@ -1,0 +1,13 @@
+100 100
+8
+Corridor 139 195 74 215 85 0
+Canteen 213 0 0 10 110 0
+Yard 255 152 0 205 112 0
+WC 25 118 210 185 100 0
+Corridor2 255 235 59 10 80 0
+Hall 213 0 249 20 8 0
+Hall 118 255 3 118 65 0
+Maintenance 230 81 0 120 100 0
+This room may contain more things than you can imagine"
+1
+That policeman is watching. I am not going to  be able to pass!" 255 235 59 Policeman

@@ -1,0 +1,7 @@
+100 65
+2
+Hall 139 195 74 10 100 0
+Cell 213 0 0 185 86 0
+You are in the corridor. 
+Try to go somewhere else"
+0
