@@ -1,6 +1,6 @@
 # The Escapists
 
-This game was developed for the PPROG (Programming Project) course at UAM by [Guillermo García Cobo](https://github.com/atmguille), Jesús Morato Martín and me. Since the game should be terminal based we decided to print spaces as if they were pixels. 
+This game was developed for the PPROG (Programming Project) course at UAM by [Guillermo García Cobo](https://github.com/atmguille), [Jesús Morato Martín](https://github.com/mapachepurpuratouris) and me. Since the game had to be terminal based we decided to print spaces as if they were pixels. 
 
 The aim of the game is to escape from a high security prison. To do so, you can move using the arrow keys, collect objects and talk to other inmates.
 
@@ -18,7 +18,7 @@ make
 
 Then, we have to make the terminal's font as small as possible. 
 
- Finally, we can run the game running the following command.s
+ Finally, we can run the game running the following commands
 
 ```bash
 ./main
