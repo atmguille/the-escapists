@@ -4,7 +4,7 @@ This game was developed for the PPROG (Programming Project) course at UAM by [Gu
 
 The aim of the game is to escape from a high security prison. To do so, you can move using the arrow keys, collect objects and talk to other inmates.
 
-![](Screenshots/Welcome Screen.png)
+![](/Screenshots/Welcome%20Screen.png)
 
 ## How to run the game
 
