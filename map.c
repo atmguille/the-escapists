@@ -23,7 +23,7 @@ Map *map_ini(const char *name, Player *player, Entity *objects, unsigned short n
         free(map);
         return NULL;
     }
-    assert(map->background->heigth == BACKGROUND_HEIGTH);
+    assert(map->background->heigth == BACKGROUND_HEIGHT);
     assert(map->background->width == BACKGROUND_WIDTH);
     
     sprintf(path, "Maps/%s/limits.bmp", name);
@@ -33,7 +33,7 @@ Map *map_ini(const char *name, Player *player, Entity *objects, unsigned short n
         free(map);
         return NULL;
     }
-    assert(map->limits->heigth == BACKGROUND_HEIGTH);
+    assert(map->limits->heigth == BACKGROUND_HEIGHT);
     assert(map->limits->width == BACKGROUND_WIDTH);
 
     sprintf(path, "Maps/%s/info.txt", name);
