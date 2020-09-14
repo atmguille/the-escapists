@@ -12,12 +12,12 @@
 typedef struct {
     unsigned short width;
     unsigned short heigth;
-    RGB** rgb;
+    RGB **rgb;
 } Image;
 
-Image* image_ini(const char *filename);
-void image_print(Image* image, int x, int y);
-void image_free(Image* image);
-void image_print_transparent(Image* image, Image* background, int x, int y);
+Image *image_ini(const char *filename);
+void image_print(Image *image, int x, int y);
+void image_free(Image *image);
+void image_print_transparent(Image *image, Image *background, int x, int y);
 
 #endif

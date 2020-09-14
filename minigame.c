@@ -2,20 +2,20 @@
 
 /* Structures for passing arguments to the threads */
 typedef struct {
-    Player* player;
-    Image* background;
+    Player *player;
+    Image *background;
     /* They're not the same. is_running could be FALSE and is_stopped won't be TRUE until everything has finished 
      * Basicly, is_running is used to stop the threads, and is_stopped is used to know if every thread is dead */
     Bool is_running;
     Bool is_stopped;
     Bool isPlayerDead;
-    Minigame* minigame;
+    Minigame *minigame;
 } MinigameArgs;
 
 typedef struct{
-    Player* player;
-    Image* object;
-    Image* background;
+    Player *player;
+    Image *object;
+    Image *background;
     unsigned short x;
     unsigned short y;
     Bool is_running;
@@ -26,7 +26,7 @@ MinigameArgs minigameArgs;
 pthread_t t;
 
 /* We use this function to detect collisions between the player and an object */
-Bool _intersect(Player* player, Image* image, int x, int y) {
+Bool _intersect(Player *player, Image *image, int x, int y) {
     /* Player's top left corner */
     int x1 = player->posX;
     int y1 = player->posY;
@@ -44,11 +44,11 @@ Bool _intersect(Player* player, Image* image, int x, int y) {
     return (x1 < x2b && x2 < x1b && y1 < y2b && y2 < y1b);
 }
 
-void* _throw(void* args) {
+void *_throw(void *args) {
     /* Dereference the args, so the code is easier to read */
-    Player* player = ((ThrowArgs *)args)->player;
-    Image* object = ((ThrowArgs *)args)->object;
-    Image* background = ((ThrowArgs *)args)->background;
+    Player *player = ((ThrowArgs *)args)->player;
+    Image *object = ((ThrowArgs *)args)->object;
+    Image *background = ((ThrowArgs *)args)->background;
     unsigned short x = ((ThrowArgs *)args)->x;
     unsigned short y = ((ThrowArgs *)args)->y;
     int i, j;
@@ -85,18 +85,18 @@ void* _throw(void* args) {
     return NULL;
 }
 
-void* _minigame_launch(void* args) {
+void *_minigame_launch(void *args) {
     /* Dereference the args, so the code is easier to read */
-    Image* background = minigameArgs.background;
-    Player* player = minigameArgs.player;
+    Image *background = minigameArgs.background;
+    Player *player = minigameArgs.player;
     /* Thread stuff */
     const unsigned short nThreads = minigameArgs.minigame->nThreads;
     pthread_t throwThreads[nThreads];
     ThrowArgs throwArgs[nThreads];
     unsigned short count = 0;
     /* Other stuff */
-    Image* pitcher; /* Character who throws objects */
-    Image* object;
+    Image *pitcher; /* Character who throws objects */
+    Image *object;
     unsigned short pitcherX = minigameArgs.minigame->pitcherX;
     unsigned short pitcherY = minigameArgs.minigame->pitcherY; 
     short direction = 1;             /* This variable will be either 1 or -1 */
@@ -190,7 +190,7 @@ void* _minigame_launch(void* args) {
     return NULL;
 }
 
-void minigame_launch(Image* background, Player* player, Minigame* minigame) {
+void minigame_launch(Image *background, Player *player, Minigame *minigame) {
     /* If the pitcher is dead, we won't load the minigame */
     if (minigame->isPitcherDead == TRUE)
         return;

@@ -1,8 +1,8 @@
 #include "map.h"
 
-Map* map_ini(const char* name, Player* player, Entity* objects, unsigned short nObjects, Entity* characters, unsigned short nCharacters, short newX, short newY) {
-    FILE* f;
-    Map* map;
+Map *map_ini(const char *name, Player *player, Entity *objects, unsigned short nObjects, Entity *characters, unsigned short nCharacters, short newX, short newY) {
+    FILE *f;
+    Map *map;
     int i;
     int j = 0;
     unsigned short dummy;
@@ -126,12 +126,12 @@ Map* map_ini(const char* name, Player* player, Entity* objects, unsigned short n
     return map;
 }
 
-ContiguousMap* map_getContiguousMap(int x, int y, Map* map) {
+ContiguousMap *map_getContiguousMap(int x, int y, Map *map) {
     /* We are going to return a copy, so we can destroy the old game securely */
-    char* name;
+    char *name;
     int i;
     unsigned short r, g, b;
-    ContiguousMap* mapcpy;    
+    ContiguousMap *mapcpy;    
 
     r = map->limits->rgb[y][x].red;
     g = map->limits->rgb[y][x].green;
@@ -147,7 +147,7 @@ ContiguousMap* map_getContiguousMap(int x, int y, Map* map) {
 }
 
 /* Returns True if the player has the object of that name */
-Bool player_has(Map* map, char* entityName) {
+Bool player_has(Map *map, char *entityName) {
     int i;
 
     for (i = 0; i < map->nObjects; i++) {
@@ -163,7 +163,7 @@ Bool player_has(Map* map, char* entityName) {
     return FALSE;
 }
 
-char* map_getSentence(int x, int y, Map* map) {
+char *map_getSentence(int x, int y, Map *map) {
     int i;
     unsigned short r, g, b;
 
@@ -180,7 +180,7 @@ char* map_getSentence(int x, int y, Map* map) {
     return NULL;
 }
 
-void map_free(Map* map) {
+void map_free(Map *map) {
     if (map != NULL) {
         image_free(map->background);
         image_free(map->limits);
@@ -191,11 +191,11 @@ void map_free(Map* map) {
     }
 }
 
-void map_print(Map* map) {
+void map_print(Map *map) {
     image_print(map->background, 0, 0);
 }
 
-void print_map_objects(Map* map) {
+void print_map_objects(Map *map) {
     int i;
 
     for (i = 0; i < map->nObjects; i++) {
@@ -205,7 +205,7 @@ void print_map_objects(Map* map) {
     }
 }
 
-void print_map_characters(Map* map) {
+void print_map_characters(Map *map) {
     int i;
 
     for (i = 0; i < map->nCharacters; i++) {

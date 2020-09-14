@@ -16,7 +16,7 @@
 #define OBJECTCATCH_PATH "Sounds/objectcatch.wav"
 #define LASTSONG_PATH "Sounds/libre.wav"
 
-int play_sound(const char* path);
+int play_sound(const char *path);
 void stop_sound(int pid);
 
 #endif

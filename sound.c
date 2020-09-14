@@ -13,11 +13,11 @@ const char player[] = "";
 
 
 /* We return the PID of the background process. The sound should be short if the PID is ignored */
-int play_sound(const char* path) {
+int play_sound(const char *path) {
     char output[OUTPUT_LEN];
     char command[COMMAND_LEN];
     int pid;
-    FILE* p;
+    FILE *p;
 
     if (player[0] == '\0') /* The computer doesn't have afplay nor aplay */
         return - 1;

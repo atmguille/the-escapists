@@ -2,17 +2,17 @@
 
 #define HEADER_MIN_SIZE 54
 
-Image* image_ini(const char* filename) {
-    FILE* f;
+Image *image_ini(const char *filename) {
+    FILE *f;
     unsigned char header[HEADER_MIN_SIZE]; /* The header is at least HEADER_MIN_SIZE bytes long */
-    unsigned char* data; /* The data depends on the image size, so we'll allocate memory */
+    unsigned char *data; /* The data depends on the image size, so we'll allocate memory */
     int i, j;
     unsigned short width;
     unsigned short heigth;
     unsigned short bpp; /* Bytes per pixel, usually 3 */
     unsigned short headerSize; /* The header is not usually just HEADER_MIN_SIZE bytes long, but longer */
     unsigned short rowSize; /* It MUST be a multiple of 4, because of allignment */
-    Image* image;
+    Image *image;
 
     /* Open file */
     f = fopen(filename, "rb");
@@ -90,7 +90,7 @@ Image* image_ini(const char* filename) {
     return image;
 }
 
-void image_print(Image* image, int x, int y) {
+void image_print(Image *image, int x, int y) {
     int i, j; 
     if (image == NULL)
         return;
@@ -105,7 +105,7 @@ void image_print(Image* image, int x, int y) {
     pthread_mutex_unlock(&semaphore);
 }
 
-void image_print_transparent(Image* image, Image* background, int x, int y) {
+void image_print_transparent(Image *image, Image *background, int x, int y) {
     int i, j;
     int red, green, blue;
     
@@ -129,7 +129,7 @@ void image_print_transparent(Image* image, Image* background, int x, int y) {
     pthread_mutex_unlock(&semaphore);
 }
 
-void image_free(Image* image) {
+void image_free(Image *image) {
     int row;
     if (image == NULL)
         return;

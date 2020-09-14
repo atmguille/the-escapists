@@ -27,7 +27,7 @@ typedef struct {
     Bool isPitcherDead;
 } Minigame;
 
-void minigame_launch(Image* background, Player* player, Minigame* minigame);
+void minigame_launch(Image *background, Player *player, Minigame *minigame);
 void minigame_destroy();
 Bool minigame_isPlayerDead();
 

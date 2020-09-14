@@ -7,9 +7,9 @@
 #include "image.h"
 #include "util.h"
 
-Status strprint(char* str);
-Status strprint_time(char* str, int secs);
-void strprint_PIN(char* str);
+Status strprint(char *str);
+Status strprint_time(char *str, int secs);
+void strprint_PIN(char *str);
 void cleanText();
 
 #endif

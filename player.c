@@ -8,8 +8,8 @@
 #define PLAYER_IMAGE_LEFT_POLICE       "Player/Police/left.bmp"
 #define PLAYER_IMAGE_BACKWARDS_POLICE  "Player/Police/backwards.bmp"
 
-Player* player_ini() {
-    Player* player;
+Player *player_ini() {
+    Player *player;
 
     player = (Player *)malloc(sizeof(Player));
     if (player == NULL)
@@ -42,25 +42,25 @@ Player* player_ini() {
     return player;
 }
 
-void player_turnLeft(Player* player) {
+void player_turnLeft(Player *player) {
     player->current = player->left;
 }
 
-void player_turnRight(Player* player) {
+void player_turnRight(Player *player) {
     player->current = player->right;
 }
 
-void player_turnBack(Player* player) {
+void player_turnBack(Player *player) {
     player->current = player->backwards;
 }
 
-void player_turnFront(Player* player) {
+void player_turnFront(Player *player) {
     /* If the user is facing back, right is default. If the user is facing either right or left, we'll leave it as it is */
     if (player->current == player->backwards)
         player->current = player->right;
 }
 
-void player_enablePoliceMode(Player* player) {
+void player_enablePoliceMode(Player *player) {
     /* We are going to assume that the image allocation won't fail (we free two images, we allocate another two of the same size) */
     image_free(player->right);
     image_free(player->left);
@@ -73,7 +73,7 @@ void player_enablePoliceMode(Player* player) {
     player_turnRight(player);
 }
 
-void player_free(Player* player) {
+void player_free(Player *player) {
     if (player != NULL) {
         image_free(player->right);
         image_free(player->left);

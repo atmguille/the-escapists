@@ -12,9 +12,9 @@ typedef enum {UP, DOWN, RIGHT, LEFT} MOVEMENTS;
 
 /* Prints the initial cover. The bool beginning indicates which string to print: beggining or end
  * The return bool indicates the calling function whether we want to exit or not */
-Bool _print_cover(Game* game, Bool beggining) {
+Bool _print_cover(Game *game, Bool beggining) {
     char c;
-    Image* cover = image_ini(COVER_PATH);
+    Image *cover = image_ini(COVER_PATH);
 
     if (cover == NULL) {
         /* If there's no memory for the cover, the game will exit */
@@ -37,7 +37,7 @@ Bool _print_cover(Game* game, Bool beggining) {
     return FALSE;
 }
 
-void restore_terminal(Game* game) {
+void restore_terminal(Game *game) {
     /* Reset color */
 	printf(ANSI_COLOR_RESET);
     /* Show cursor */
@@ -49,9 +49,9 @@ void restore_terminal(Game* game) {
 }
 
 Status game_start() {
-    Game* game;
+    Game *game;
     struct termios new;
-    FILE* f;
+    FILE *f;
     int i;
     char imagePath[ENTITY_NAME_LEN + 16]; /* 16 is the maximum length of the path */
     char defaultMapName[MAP_NAME_LEN];
@@ -227,7 +227,7 @@ Status game_start() {
     return OK;
 }
 
-void game_stop(Game* game) {
+void game_stop(Game *game) {
     int i;
     if (game != NULL) {
         /* Free allocated resources */
@@ -253,13 +253,13 @@ void game_stop(Game* game) {
     }
 }
 
-void _print_player(Game* game) {    
+void _print_player(Game *game) {    
     image_print_transparent(game->player->current, game->map->background, game->player->posX, game->player->posY);
 }
 
 
 /* Returns True if player is close enough to catch an object */
-Bool _is_close(Player* player, Entity* entity, int d) {
+Bool _is_close(Player *player, Entity *entity, int d) {
     /* Player's top left corner */
     int x1 = player->posX;
     int y1 = player->posY;
@@ -300,7 +300,7 @@ Bool _is_close(Player* player, Entity* entity, int d) {
     }
 }
 
-void _obj_catch(Game* game) {
+void _obj_catch(Game *game) {
     char msg[MSG_LEN];
     int i, j, pos;
     
@@ -321,7 +321,7 @@ void _obj_catch(Game* game) {
     }
 }
 
-void _character_greeting(Game* game) {
+void _character_greeting(Game *game) {
     char msg[MSG_LEN];
     int i, j, pos;
     
@@ -334,7 +334,7 @@ void _character_greeting(Game* game) {
 }
 
 /* The Bool return is used to allow or not the player to go it that direction */
-Bool _character_kill(Game* game) {
+Bool _character_kill(Game *game) {
     char msg[MSG_LEN];
     int i, j, pos;
     
@@ -363,7 +363,7 @@ Bool _character_kill(Game* game) {
 }
 
 
-Bool _check_limits(int x, int y, Image* limits) {
+Bool _check_limits(int x, int y, Image *limits) {
     int red, blue, green;
 
 	red = limits->rgb[y][x].red;
@@ -376,11 +376,11 @@ Bool _check_limits(int x, int y, Image* limits) {
 }
 
 /* We need the reference to the game to print the current map again if the pin is not correct */
-Bool _checkPin(Game* game, int pin) {
+Bool _checkPin(Game *game, int pin) {
     const unsigned int inputSize = 5;
     char input[inputSize];
     int i;
-    Image* image = image_ini(PIN_PATH);
+    Image *image = image_ini(PIN_PATH);
     if (image == NULL) {
         return FALSE;
     }
@@ -433,8 +433,8 @@ Bool _checkPin(Game* game, int pin) {
     return FALSE;
 }
 
-void _changeMap(Game* game, ContiguousMap* contiguousMap) {
-    ContiguousMap* mapcpy;
+void _changeMap(Game *game, ContiguousMap *contiguousMap) {
+    ContiguousMap *mapcpy;
     int i;
 
     if (contiguousMap->pin != 0) {
@@ -483,13 +483,13 @@ void _changeMap(Game* game, ContiguousMap* contiguousMap) {
     _print_player(game);
 }
 
-void _move(Game* game, MOVEMENTS mov) {
+void _move(Game *game, MOVEMENTS mov) {
     const char movX[] = {0 , 0, 1, -1};
     const char movY[] = {-1, 1, 0,  0};
     int x1, y1, x2, y2;
     int newX1, newY1, newX2, newY2;
     int i;
-    ContiguousMap* contiguousMap;
+    ContiguousMap *contiguousMap;
     Bool permission;
 
     if (game == NULL)         
@@ -597,7 +597,7 @@ void _move(Game* game, MOVEMENTS mov) {
     _print_player(game);
 }
 
-void game_get_input(Game* game) {
+void game_get_input(Game *game) {
     char c;
     char string[100];
     int i;

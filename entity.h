@@ -9,7 +9,7 @@
 
 /* Objects and Characters are Entities. With inheritance this would be nicer :( */
 typedef struct {
-    Image* image;
+    Image *image;
     int posX;
     int posY;
     char mapName[MAP_NAME_LEN];

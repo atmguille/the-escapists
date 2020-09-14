@@ -23,7 +23,7 @@ void cleanText() {
     pthread_mutex_unlock(&semaphore);
 }
 
-void strprint_PIN(char* str) {
+void strprint_PIN(char *str) {
     /* We assume the input is correct (_checkPin will handle that), that is, only up to 4 numbers */
     const int digits = 4;
     /* We tried to do posX[digits] but it only compiles in Mac, not in Linux */
@@ -32,7 +32,7 @@ void strprint_PIN(char* str) {
     unsigned short i = 0;
     unsigned short x, y;
     char filename[MAX_FILENAME];
-    Image* image;
+    Image *image;
 
     /* Print the string passed */
     while (*str != '\0') {
@@ -60,9 +60,9 @@ void strprint_PIN(char* str) {
     pthread_mutex_unlock(&semaphore);
 }
 
-Status _strprint(char* str) {
+Status _strprint(char *str) {
     char filename[MAX_FILENAME];
-    Image* image;
+    Image *image;
     int x = PADDING;
     int y = BACKGROUND_HEIGTH + PADDING;
     int row = 0;
@@ -127,14 +127,14 @@ Status _strprint(char* str) {
     return OK;
 }
 
-Status strprint(char* str) {
+Status strprint(char *str) {
     /* Cancel the previous sleepTimer, if there's one */
     pthread_cancel(sleepTimer);
 
     return _strprint(str);
 }
 
-void* _wait(void* secs) {
+void *_wait(void *secs) {
     sleep(*((int *)secs));
     cleanText();
     printedSentece[0] = '\0';
@@ -142,7 +142,7 @@ void* _wait(void* secs) {
 }
 
 
-Status strprint_time(char* str, int secs) {
+Status strprint_time(char *str, int secs) {
     /* If we don't copy secs to a global variable, it will get destroyed by the time we want to use it */
     globalSecs = secs;
 

@@ -17,12 +17,12 @@
 
 typedef struct {
     struct termios backup;
-    Player* player;
+    Player *player;
     Entity objects[MAX_OBJECTS];
     unsigned short nObjects;
     Entity characters[MAX_CHARACTERS];
     unsigned short nCharacters;
-    Map* map;
+    Map *map;
     Minigame minigames[MAX_MINIGAMES];
     unsigned short nMinigames;
     char lastMapName[MAP_NAME_LEN];
@@ -31,7 +31,7 @@ typedef struct {
 
 
 Status game_start();
-void game_stop(Game* game);
-void game_get_input(Game* game);
+void game_stop(Game *game);
+void game_get_input(Game *game);
 
 #endif
