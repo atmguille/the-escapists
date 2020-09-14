@@ -12,29 +12,29 @@ typedef enum {UP, DOWN, RIGHT, LEFT} MOVEMENTS;
 
 /* Prints the initial cover. The bool beginning indicates which string to print: beggining or end
  * The return bool indicates the calling function whether we want to exit or not */
-Bool _print_cover(Game *game, Bool beggining) {
+bool _print_cover(Game *game, bool beggining) {
     char c;
     Image *cover = image_ini(COVER_PATH);
 
     if (cover == NULL) {
         /* If there's no memory for the cover, the game will exit */
-        return TRUE;
+        return true;
     }
     image_print(cover, 0, 0);
     image_free(cover);
 
-    if (beggining == TRUE)
+    if (beggining == true)
         strprint("Welcome!\nPlease, press any key to start playing");
     else
         strprint("Thanks for playing!\nWe hope you enjoyed. Press any key to exit");
     c = getchar();
     /* See game_get_input */
     /* We only care if the user hits the Q if it's the beggining */
-    if ((c == 'q' || c == 'Q' || c == 3) && (beggining == TRUE)) {
-        return TRUE;
+    if ((c == 'q' || c == 'Q' || c == 3) && (beggining == true)) {
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 void restore_terminal(Game *game) {
@@ -53,6 +53,7 @@ Status game_start() {
     struct termios new;
     FILE *f;
     int i;
+    int temp;
     char imagePath[ENTITY_NAME_LEN + 16]; /* 16 is the maximum length of the path */
     char defaultMapName[MAP_NAME_LEN];
     
@@ -83,7 +84,7 @@ Status game_start() {
     printf(HIDE_CURSOR);
 
     /* Prints the cover of the game (and exit if the user wants so) */
-    if (_print_cover(game, TRUE) == TRUE) {
+    if (_print_cover(game, true) == true) {
         restore_terminal(game);
         free(game);
         return OK;
@@ -108,7 +109,8 @@ Status game_start() {
     assert(game->nObjects <= MAX_OBJECTS);
 
     for (i = 0; i < game->nObjects; i++) {
-        fscanf(f, "%s %s %d %d %d %[^\"]%*c", game->objects[i].name, game->objects[i].mapName, &game->objects[i].posX, &game->objects[i].posY, &game->objects[i].mBool, game->objects[i].description);
+        fscanf(f, "%s %s %d %d %d %[^\"]%*c", game->objects[i].name, game->objects[i].mapName, &game->objects[i].posX, &game->objects[i].posY, &temp, game->objects[i].description);
+        game->objects[i].mbool = (temp == 1);
         sprintf(imagePath, "Objects/%s.bmp", game->objects[i].name);
         game->objects[i].image = image_ini(imagePath);
         if (game->objects[i].image == NULL) {
@@ -139,7 +141,8 @@ Status game_start() {
     assert(game->nCharacters <= MAX_CHARACTERS);
 
     for (i = 0; i < game->nCharacters; i++) {
-        fscanf(f, "%s %s %d %d %d %[^\"]%*c", game->characters[i].name, game->characters[i].mapName, &game->characters[i].posX, &game->characters[i].posY, &game->characters[i].mBool, game->characters[i].description);
+        fscanf(f, "%s %s %d %d %d %[^\"]%*c", game->characters[i].name, game->characters[i].mapName, &game->characters[i].posX, &game->characters[i].posY, &temp, game->characters[i].description);
+        game->characters[i].mbool = (temp == 1);
         sprintf(imagePath, "Characters/%s.bmp", game->characters[i].name);
         game->characters[i].image = image_ini(imagePath);
         if (game->characters[i].image == NULL) {
@@ -175,7 +178,8 @@ Status game_start() {
     fscanf(f, "%hd", &game->nMinigames);
     assert(game->nMinigames <= MAX_MINIGAMES);
     for (i = 0; i < game->nMinigames; i++) {
-        fscanf(f, "%s %hd %hd %hd %hd %s %s %s %hd %ld %d", game->minigames[i].pitcherName, &game->minigames[i].pitcherX, &game->minigames[i].pitcherY, &game->minigames[i].pitcherMax, &game->minigames[i].pitcherMin, game->minigames[i].objectName, game->minigames[i].mapName, game->minigames[i].nextMap, &game->minigames[i].nThreads, &game->minigames[i].objectSpeed, &game->minigames[i].isPitcherDead);
+        fscanf(f, "%s %hd %hd %hd %hd %s %s %s %hd %ld %d", game->minigames[i].pitcherName, &game->minigames[i].pitcherX, &game->minigames[i].pitcherY, &game->minigames[i].pitcherMax, &game->minigames[i].pitcherMin, game->minigames[i].objectName, game->minigames[i].mapName, game->minigames[i].nextMap, &game->minigames[i].nThreads, &game->minigames[i].objectSpeed, &temp);
+        game->minigames[i].isPitcherDead = (temp == 1);
     }
     fclose(f);
 
@@ -238,7 +242,7 @@ void game_stop(Game *game) {
             }
         }
         /* The user evidently wants to exit, we don't check the result of the function */
-        _print_cover(game, FALSE);
+        _print_cover(game, false);
         map_free(game->map);
         player_free(game->player);
         for (i = 0; i < game->nObjects; i++) {
@@ -259,7 +263,7 @@ void _print_player(Game *game) {
 
 
 /* Returns True if player is close enough to catch an object */
-Bool _is_close(Player *player, Entity *entity, int d) {
+bool _is_close(Player *player, Entity *entity, int d) {
     /* Player's top left corner */
     int x1 = player->posX;
     int y1 = player->posY;
@@ -274,10 +278,10 @@ Bool _is_close(Player *player, Entity *entity, int d) {
     int x2b = entity->posX + entity->image->width;
     int y2b = entity->posY + entity->image->heigth;                                       
     
-    Bool left = x2b < x1;
-    Bool right = x1b < x2;
-    Bool bottom = y2b < y1;
-    Bool top = y1b < y2;
+    bool left = x2b < x1;
+    bool right = x1b < x2;
+    bool bottom = y2b < y1;
+    bool top = y1b < y2;
 
     if (top && left) {
         return distance(x1, y1b, x2b, y2) < (d * d);
@@ -296,7 +300,7 @@ Bool _is_close(Player *player, Entity *entity, int d) {
     } else if (top) {
         return (y2 - y1b) < d;
     } else {          /* rectangles intersect */
-        return TRUE;                
+        return true;                
     }
 }
 
@@ -305,11 +309,11 @@ void _obj_catch(Game *game) {
     int i, j, pos;
     
     for (pos = 0; pos < game->nObjects; pos++) {
-        if (game->objects[pos].mBool == FALSE && strcmp(game->map->name, game->objects[pos].mapName) == 0 && _is_close(game->player, &(game->objects[pos]), 1)) {
+        if (game->objects[pos].mbool == false && strcmp(game->map->name, game->objects[pos].mapName) == 0 && _is_close(game->player, &(game->objects[pos]), 1)) {
             play_sound(OBJECTCATCH_PATH);
             sprintf(msg, "You caught a %s\n%s", game->objects[pos].name, game->objects[pos].description);
             strprint_time(msg, PRINT_TIME);
-            game->objects[pos].mBool = TRUE;
+            game->objects[pos].mbool = true;
             pthread_mutex_lock(&semaphore);
             for (i = 0; i < game->objects[pos].image->heigth; i++) {
                 moveCursorTo(game->objects[pos].posX, game->objects[pos].posY + i);
@@ -326,24 +330,24 @@ void _character_greeting(Game *game) {
     int i, j, pos;
     
     for (pos = 0; pos < game->nCharacters; pos++) {
-        if (game->characters[pos].mBool == FALSE && strcmp(game->map->name, game->characters[pos].mapName) == 0 && _is_close(game->player, &(game->characters[pos]), 7)) {
+        if (game->characters[pos].mbool == false && strcmp(game->map->name, game->characters[pos].mapName) == 0 && _is_close(game->player, &(game->characters[pos]), 7)) {
             sprintf(msg, "%s: %s", game->characters[pos].name, game->characters[pos].description); //TODO: tenemos dos puntos y comillas??
             strprint_time(msg, PRINT_TIME);
         }
     }
 }
 
-/* The Bool return is used to allow or not the player to go it that direction */
-Bool _character_kill(Game *game) {
+/* The bool return is used to allow or not the player to go it that direction */
+bool _character_kill(Game *game) {
     char msg[MSG_LEN];
     int i, j, pos;
     
     for (pos = 0; pos < game->nCharacters; pos++) {
-        if (game->characters[pos].mBool == FALSE && strcmp(game->map->name, game->characters[pos].mapName) == 0 && _is_close(game->player, &(game->characters[pos]), 1)) { //TODO: condición para matarlo
+        if (game->characters[pos].mbool == false && strcmp(game->map->name, game->characters[pos].mapName) == 0 && _is_close(game->player, &(game->characters[pos]), 1)) { //TODO: condición para matarlo
             if (strcmp(game->characters[pos].name, "Policeman") == 0 && player_has(game->map, "Knife")) {                                                        
                 sprintf(msg, "Great, you killed the %s", game->characters[pos].name);
                 strprint_time(msg, PRINT_TIME);
-                game->characters[pos].mBool = TRUE;
+                game->characters[pos].mbool = true;
                 pthread_mutex_lock(&semaphore);
                 for (i = 0; i < game->characters[pos].image->heigth; i++) {
                     moveCursorTo(game->characters[pos].posX, game->characters[pos].posY + i);
@@ -353,17 +357,17 @@ Bool _character_kill(Game *game) {
                 pthread_mutex_unlock(&semaphore);
                 player_enablePoliceMode(game->player);
                 _print_player(game);
-                return TRUE;
+                return true;
             } else {
-                return FALSE;
+                return false;
             }
         }
     }
-    return TRUE;
+    return true;
 }
 
 
-Bool _check_limits(int x, int y, Image *limits) {
+bool _check_limits(int x, int y, Image *limits) {
     int red, blue, green;
 
 	red = limits->rgb[y][x].red;
@@ -371,18 +375,18 @@ Bool _check_limits(int x, int y, Image *limits) {
     blue = limits->rgb[y][x].blue;
 
     if (red == 0 && green == 0 && blue == 0)
-    	return TRUE;
-    return FALSE;
+    	return true;
+    return false;
 }
 
 /* We need the reference to the game to print the current map again if the pin is not correct */
-Bool _checkPin(Game *game, int pin) {
+bool _checkPin(Game *game, int pin) {
     const unsigned int inputSize = 5;
     char input[inputSize];
     int i;
     Image *image = image_ini(PIN_PATH);
     if (image == NULL) {
-        return FALSE;
+        return false;
     }
 
     cleanText();
@@ -398,7 +402,7 @@ Bool _checkPin(Game *game, int pin) {
             print_map_objects(game->map);
             print_map_characters(game->map);
             _print_player(game);
-            return FALSE;
+            return false;
         } else if (input[i] == 127) {
             /* 127 is the ASCII code for DEL key */
             i -= 2;
@@ -418,7 +422,7 @@ Bool _checkPin(Game *game, int pin) {
 
     if (atoi(input) == pin) {
         play_sound(ACCESSGRANTED_PATH);
-        return TRUE;
+        return true;
     } else {
         play_sound(BUZZ_PATH);
         strprint_time("Wrong PIN", PRINT_TIME);
@@ -426,11 +430,11 @@ Bool _checkPin(Game *game, int pin) {
         print_map_objects(game->map);
         print_map_characters(game->map);
         _print_player(game);
-        return FALSE;
+        return false;
     }
 
             
-    return FALSE;
+    return false;
 }
 
 void _changeMap(Game *game, ContiguousMap *contiguousMap) {
@@ -438,7 +442,7 @@ void _changeMap(Game *game, ContiguousMap *contiguousMap) {
     int i;
 
     if (contiguousMap->pin != 0) {
-        if (_checkPin(game, contiguousMap->pin) == FALSE) {
+        if (_checkPin(game, contiguousMap->pin) == false) {
             return;
         }
     }
@@ -455,7 +459,7 @@ void _changeMap(Game *game, ContiguousMap *contiguousMap) {
     mapcpy->newY = contiguousMap->newY;
     
     for (i = 0; i < game->nMinigames; i++) {
-        if (strcmp(game->map->name, game->minigames[i].mapName) == 0 && minigame_isPlayerDead() == FALSE) {
+        if (strcmp(game->map->name, game->minigames[i].mapName) == 0 && minigame_isPlayerDead() == false) {
             minigame_destroy();
             /* There's only one minigame at the same time */
             break;
@@ -490,7 +494,7 @@ void _move(Game *game, MOVEMENTS mov) {
     int newX1, newY1, newX2, newY2;
     int i;
     ContiguousMap *contiguousMap;
-    Bool permission;
+    bool permission;
 
     if (game == NULL)         
         return;
@@ -516,7 +520,7 @@ void _move(Game *game, MOVEMENTS mov) {
                   strprint(map_getSentence(newX1, newY2, game->map)) == ERROR &&
                   strprint(map_getSentence(newX2, newY2, game->map)) == ERROR);
 
-    if (permission == FALSE)
+    if (permission == false)
         return;                        
 
     /* Check if we can move there */
@@ -549,7 +553,7 @@ void _move(Game *game, MOVEMENTS mov) {
     /* Check if there are objects nearby */
     _obj_catch(game);
     /* If in the new coordinates there is a character, don't allow the player to move there */
-    if (_character_kill(game) == FALSE) {
+    if (_character_kill(game) == false) {
         game->player->posX = x1;
         game->player->posY = y1;
         return;
@@ -607,7 +611,7 @@ void game_get_input(Game *game) {
         /* After hours trying to figure out how to know asynchronously when the player died because of and object thrown at him (minigame)
          * we gave up and went with this synchronous approach, where we ask the player to press a key. 
          * We check if c is 'q' so we don't load a map if we are going to destroy it afterwards */
-        if (minigame_isPlayerDead() == TRUE && c != 'q' && c != 'Q' && c != 3) {
+        if (minigame_isPlayerDead() == true && c != 'q' && c != 'Q' && c != 3) {
             for (i = 0; i < game->nMinigames; i++) {
                 /* If we are in a minigame map, we change map */
                 if (strcmp(game->map->name, game->minigames[i].mapName) == 0) {

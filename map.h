@@ -52,7 +52,7 @@ void map_free(Map *map);
 void map_print(Map *map);
 void print_map_objects(Map *map);
 void print_map_characters(Map *map);
-Bool player_has(Map *map, char *entityName);
+bool player_has(Map *map, char *entityName);
 
 /* Function to see if we can move to one of the contiguous maps, returning its name if so, or NULL if not */
 ContiguousMap *map_getContiguousMap(int x, int y, Map *map);

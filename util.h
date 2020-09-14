@@ -18,9 +18,9 @@
 #include <stdio.h>
 #include <assert.h>
 #include <pthread.h>
+#include <stdbool.h>
 
-typedef enum {FALSE, TRUE} Bool;
-typedef enum {ERROR, OK}   Status;
+typedef enum {ERROR, OK} Status;
 
 typedef struct {
     unsigned short red;

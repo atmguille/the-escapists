@@ -147,20 +147,20 @@ ContiguousMap *map_getContiguousMap(int x, int y, Map *map) {
 }
 
 /* Returns True if the player has the object of that name */
-Bool player_has(Map *map, char *entityName) {
+bool player_has(Map *map, char *entityName) {
     int i;
 
     for (i = 0; i < map->nObjects; i++) {
         if (strcmp(map->objects[i].name, entityName) == 0)
-            return map->objects[i].mBool;
+            return map->objects[i].mbool;
     }
 
     for (i = 0; i < map->nCharacters; i++) {
         if (strcmp(map->characters[i].name, entityName) == 0)
-            return map->characters[i].mBool;
+            return map->characters[i].mbool;
     }
 
-    return FALSE;
+    return false;
 }
 
 char *map_getSentence(int x, int y, Map *map) {
@@ -199,7 +199,7 @@ void print_map_objects(Map *map) {
     int i;
 
     for (i = 0; i < map->nObjects; i++) {
-        if (map->objects[i].mBool == FALSE && strcmp(map->objects[i].mapName, map->name) == 0) {
+        if (map->objects[i].mbool == false && strcmp(map->objects[i].mapName, map->name) == 0) {
             image_print_transparent(map->objects[i].image, map->background, map->objects[i].posX, map->objects[i].posY);
         }
     }
@@ -209,7 +209,7 @@ void print_map_characters(Map *map) {
     int i;
 
     for (i = 0; i < map->nCharacters; i++) {
-        if (map->characters[i].mBool == FALSE && strcmp(map->characters[i].mapName, map->name) == 0) {
+        if (map->characters[i].mbool == false && strcmp(map->characters[i].mapName, map->name) == 0) {
             image_print_transparent(map->characters[i].image, map->background, map->characters[i].posX, map->characters[i].posY);
         }
     }

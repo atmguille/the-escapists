@@ -24,11 +24,11 @@ typedef struct {
     unsigned short nThreads;
     long objectSpeed;
     /* If the pitcher is dead, we won't load the minigame */
-    Bool isPitcherDead;
+    bool isPitcherDead;
 } Minigame;
 
 void minigame_launch(Image *background, Player *player, Minigame *minigame);
 void minigame_destroy();
-Bool minigame_isPlayerDead();
+bool minigame_isPlayerDead();
 
 #endif

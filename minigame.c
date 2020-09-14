@@ -4,11 +4,11 @@
 typedef struct {
     Player *player;
     Image *background;
-    /* They're not the same. is_running could be FALSE and is_stopped won't be TRUE until everything has finished 
+    /* They're not the same. is_running could be false and is_stopped won't be true until everything has finished 
      * Basicly, is_running is used to stop the threads, and is_stopped is used to know if every thread is dead */
-    Bool is_running;
-    Bool is_stopped;
-    Bool isPlayerDead;
+    bool is_running;
+    bool is_stopped;
+    bool isPlayerDead;
     Minigame *minigame;
 } MinigameArgs;
 
@@ -18,7 +18,7 @@ typedef struct{
     Image *background;
     unsigned short x;
     unsigned short y;
-    Bool is_running;
+    bool is_running;
 } ThrowArgs;
 
 /* minigameArgs and t need to be persistent */
@@ -26,7 +26,7 @@ MinigameArgs minigameArgs;
 pthread_t t;
 
 /* We use this function to detect collisions between the player and an object */
-Bool _intersect(Player *player, Image *image, int x, int y) {
+bool _intersect(Player *player, Image *image, int x, int y) {
     /* Player's top left corner */
     int x1 = player->posX;
     int y1 = player->posY;
@@ -54,12 +54,12 @@ void *_throw(void *args) {
     int i, j;
 
     /* We'll stop whenever the caller wants or if the object reaches the end of the screen */
-    while (x > 0 && ((ThrowArgs *)args)->is_running == TRUE) {
+    while (x > 0 && ((ThrowArgs *)args)->is_running == true) {
         /* If the user hit an object, exit (not only this game but the minigame) */
         if (_intersect(player, object, x, y)) {
             play_sound(DEATH_PATH);
-            minigameArgs.is_running = FALSE;
-            minigameArgs.isPlayerDead = TRUE;
+            minigameArgs.is_running = false;
+            minigameArgs.isPlayerDead = true;
             break;
         }
         /* Clean the right part of the object (the object is moving left) */
@@ -117,11 +117,11 @@ void *_minigame_launch(void *args) {
     }
 
     /* We'll stop whenever the caller wants or if the object reaches the end of the screen */
-    while (minigameArgs.is_running == TRUE) {
+    while (minigameArgs.is_running == true) {
         /* If the user touches the pitcher, kill him */
         if (_intersect(player, pitcher, pitcherX, pitcherY)) {
-            minigameArgs.is_running = FALSE;
-            minigameArgs.minigame->isPitcherDead = TRUE;
+            minigameArgs.is_running = false;
+            minigameArgs.minigame->isPitcherDead = true;
             break;
         }
         if (pitcherY >= minigameArgs.minigame->pitcherMax || pitcherY <= minigameArgs.minigame->pitcherMin) { 
@@ -133,7 +133,7 @@ void *_minigame_launch(void *args) {
                 /* If the count is greater than nThreads, we'll have to reuse one 
                  * This is the reasons que don't do count = (count + 1) % nThreads at the end of this block */
                 if (count >= nThreads) {
-                    throwArgs[count % nThreads].is_running = FALSE;
+                    throwArgs[count % nThreads].is_running = false;
                     pthread_join(throwThreads[count % nThreads], NULL);
                 }
                 throwArgs[count % nThreads].object = object;
@@ -142,7 +142,7 @@ void *_minigame_launch(void *args) {
                 /* We throw the objects from the left of the pitcher at medium height */
                 throwArgs[count % nThreads].x = pitcherX - object->width;
                 throwArgs[count % nThreads].y = pitcherY + pitcher->heigth / 2;
-                throwArgs[count % nThreads].is_running = TRUE;
+                throwArgs[count % nThreads].is_running = true;
                 pthread_create(&(throwThreads[count % nThreads]), NULL, _throw, &(throwArgs[count % nThreads]));
                 count++;
         }
@@ -164,7 +164,7 @@ void *_minigame_launch(void *args) {
     }
     /* We have to tell all threads to stop (they might be uninitialized ones) */
     for (i = 0; i < nThreads && i < count; i++) {
-        throwArgs[i].is_running = FALSE;
+        throwArgs[i].is_running = false;
         pthread_join(throwThreads[i], NULL);
     }
     /* We have to clean the pitcher from screen */
@@ -182,34 +182,34 @@ void *_minigame_launch(void *args) {
     image_free(object);
 
     /* If the user has been killed with an object */
-    if (minigameArgs.isPlayerDead == TRUE) {
+    if (minigameArgs.isPlayerDead == true) {
        strprint("You are dead, press any key to revive");
     }
 
-    minigameArgs.is_stopped = TRUE;
+    minigameArgs.is_stopped = true;
     return NULL;
 }
 
 void minigame_launch(Image *background, Player *player, Minigame *minigame) {
     /* If the pitcher is dead, we won't load the minigame */
-    if (minigame->isPitcherDead == TRUE)
+    if (minigame->isPitcherDead == true)
         return;
     minigameArgs.background = background;
     minigameArgs.player = player;
     minigameArgs.minigame = minigame;
-    minigameArgs.is_running = TRUE;
-    minigameArgs.isPlayerDead = FALSE;
-    minigameArgs.is_stopped = FALSE;
+    minigameArgs.is_running = true;
+    minigameArgs.isPlayerDead = false;
+    minigameArgs.is_stopped = false;
     pthread_create(&t, NULL, _minigame_launch, NULL);
 }
 
 void minigame_destroy() {
-    if (minigameArgs.is_stopped == FALSE) {
-        minigameArgs.is_running = FALSE;
+    if (minigameArgs.is_stopped == false) {
+        minigameArgs.is_running = false;
         pthread_join(t, NULL);
     }
 }
 
-Bool minigame_isPlayerDead() {
+bool minigame_isPlayerDead() {
     return minigameArgs.isPlayerDead;
 }
