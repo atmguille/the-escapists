@@ -13,11 +13,11 @@ typedef struct {
 } Player;
 
 Player *player_ini();
-void player_turnLeft(Player *player);
-void player_turnRight(Player *player);
-void player_turnBack(Player *player);
-void player_turnFront(Player *player);
-void player_enablePoliceMode(Player *player);
+void player_turn_left(Player *player);
+void player_turn_right(Player *player);
+void player_turn_back(Player *player);
+void player_turn_front(Player *player);
+void player_enable_police_mode(Player *player);
 void player_free(Player *player);
 
 #endif

@@ -30,7 +30,7 @@ typedef struct {
 
 pthread_mutex_t semaphore;
 
-void moveCursorTo(int x, int y);
+void move_cursor_to(int x, int y);
 int distance(int x1, int y1, int x2, int y2);
 void log_str(char *str);
 void log_int(int n);

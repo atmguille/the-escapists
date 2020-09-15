@@ -65,7 +65,7 @@ void *_throw(void *args) {
         /* Clean the right part of the object (the object is moving left) */
         pthread_mutex_lock(&semaphore);
         for (i = 0; i < object->heigth; i++) {
-            moveCursorTo(x + object->width - 1, y + i);
+            move_cursor_to(x + object->width - 1, y + i);
             printf(COLOR_SPACE(background->rgb[y + i][x + object->width - 1].red, background->rgb[y + i][x + object->width - 1].green, background->rgb[y + i][x + object->width - 1].blue));
         }
         pthread_mutex_unlock(&semaphore);
@@ -75,7 +75,7 @@ void *_throw(void *args) {
     /* Before destroying the thread, we clean the object from the screen */
     pthread_mutex_lock(&semaphore);
     for (i = 0; i < object->heigth; i++) {
-        moveCursorTo(x, y + i);
+        move_cursor_to(x, y + i);
         for (j = 0; j < object->width; j++)
             printf(COLOR_SPACE(background->rgb[y + i][x + j].red, background->rgb[y + i][x + j].green, background->rgb[y + i][x + j].blue));
     }
@@ -148,12 +148,12 @@ void *_minigame_launch(void *args) {
         }
         pthread_mutex_lock(&semaphore);
         if (direction == - 1) { //va para arriba
-            moveCursorTo(pitcherX, pitcherY + pitcher->heigth -1);
+            move_cursor_to(pitcherX, pitcherY + pitcher->heigth -1);
                 for (i = 0; i < pitcher->width; i++) {
                     printf(COLOR_SPACE(background->rgb[pitcherY + pitcher->heigth -1][pitcherX + i].red, background->rgb[pitcherY + pitcher->heigth - 1][pitcherX + i].green, background->rgb[pitcherY + pitcher->heigth -1][pitcherX + i].blue));
                 }
         } else { //va para abajo
-            moveCursorTo(pitcherX, pitcherY);
+            move_cursor_to(pitcherX, pitcherY);
             for (i = 0; i < pitcher->width; i++) {
                 printf(COLOR_SPACE(background->rgb[pitcherY][pitcherX + i].red, background->rgb[pitcherY][pitcherX + i].green, background->rgb[pitcherY][pitcherX + i].blue));
             }
@@ -170,7 +170,7 @@ void *_minigame_launch(void *args) {
     /* We have to clean the pitcher from screen */
     pthread_mutex_lock(&semaphore);
     for (i = 0; i < pitcher->heigth; i++) {
-        moveCursorTo(pitcherX, pitcherY + i);
+        move_cursor_to(pitcherX, pitcherY + i);
         for (j = 0; j < pitcher->width; j++)
             printf(COLOR_SPACE(background->rgb[pitcherY + i][pitcherX + j].red, background->rgb[pitcherY + i][pitcherX + j].green, background->rgb[pitcherY + i][pitcherX + j].blue));
     }

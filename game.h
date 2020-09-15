@@ -19,9 +19,9 @@ typedef struct {
     struct termios backup;
     Player *player;
     Entity objects[MAX_OBJECTS];
-    unsigned short nObjects;
+    unsigned short num_objects;
     Entity characters[MAX_CHARACTERS];
-    unsigned short nCharacters;
+    unsigned short num_characters;
     Map *map;
     Minigame minigames[MAX_MINIGAMES];
     unsigned short nMinigames;

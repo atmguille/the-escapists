@@ -19,7 +19,7 @@ typedef struct {
     unsigned short pitcherMin;
     unsigned short pitcherMax;
     char objectName[ENTITY_NAME_LEN];
-    char mapName[MAP_NAME_LEN];
+    char map_name[MAP_NAME_LEN];
     char nextMap[MAP_NAME_LEN];
     unsigned short nThreads;
     long objectSpeed;

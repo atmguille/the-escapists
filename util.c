@@ -1,6 +1,6 @@
 #include "util.h"
 
-void moveCursorTo(int x, int y) {
+void move_cursor_to(int x, int y) {
     /* Cursor starts at 1,1 and there are two spaces per pixel */
     printf("%c[%d;%dH", 27, y + 1, x * 2 + 1);
 }

@@ -12,7 +12,7 @@ typedef struct {
     Image *image;
     int posX;
     int posY;
-    char mapName[MAP_NAME_LEN];
+    char map_name[MAP_NAME_LEN];
     char name[ENTITY_NAME_LEN];
     char description[MSG_LEN]; /* Description of the object or greeting of the character */
     bool mbool;                /* Check if the user have an object, or if a character is dead 

@@ -10,6 +10,6 @@
 Status strprint(char *str);
 Status strprint_time(char *str, int secs);
 void strprint_PIN(char *str);
-void cleanText();
+void clean_text();
 
 #endif
