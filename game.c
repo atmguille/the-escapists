@@ -8,6 +8,8 @@
 #define COVER_PATH "Miscellaneous/Cover.bmp"
 #define PIN_PATH "Miscellaneous/PIN.bmp"
 
+#define PIN_LENGTH 4
+
 typedef enum {UP, DOWN, RIGHT, LEFT} MOVEMENTS;
 
 /* Prints the initial cover. The bool beginning indicates which string to print: beggining or end
@@ -381,8 +383,7 @@ bool _check_limits(int x, int y, Image *limits) {
 
 /* We need the reference to the game to print the current map again if the pin is not correct */
 bool _checkPin(Game *game, int pin) {
-    const unsigned int input_size = 5;
-    char input[input_size];
+    char input[PIN_LENGTH + 1];
     int i;
     Image *image = image_ini(PIN_PATH);
     if (image == NULL) {
@@ -392,7 +393,7 @@ bool _checkPin(Game *game, int pin) {
     clean_text();
     image_print(image, 0, 0);
     image_free(image);
-    for (i = 0; i < input_size - 1; i++) {
+    for (i = 0; i < PIN_LENGTH; i++) {
         input[i] = getchar();
         /* See get_input */
         if (input[i] == 'q' || input[i] == 'Q' || input[i] == 3) {
