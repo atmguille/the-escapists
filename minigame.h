@@ -11,24 +11,24 @@
 #define MAX_MINIGAMES 2
 
 typedef struct {
-    char pitcherName[ENTITY_NAME_LEN];
+    char pitcher_name[ENTITY_NAME_LEN];
     /* Initial position of the pitcher */
-    unsigned short pitcherX;
-    unsigned short pitcherY;
+    unsigned short pitcher_x;
+    unsigned short pitcher_y;
     /* Y range of the pitcher */
-    unsigned short pitcherMin;
-    unsigned short pitcherMax;
-    char objectName[ENTITY_NAME_LEN];
+    unsigned short pitcher_min_y;
+    unsigned short pitcher_max_y;
+    char object_name[ENTITY_NAME_LEN];
     char map_name[MAP_NAME_LEN];
-    char nextMap[MAP_NAME_LEN];
-    unsigned short nThreads;
-    long objectSpeed;
+    char next_map[MAP_NAME_LEN];
+    unsigned short num_threads;
+    long object_speed;
     /* If the pitcher is dead, we won't load the minigame */
-    bool isPitcherDead;
+    bool is_pitcher_dead;
 } Minigame;
 
 void minigame_launch(Image *background, Player *player, Minigame *minigame);
 void minigame_destroy();
-bool minigame_isPlayerDead();
+bool minigame_is_player_dead();
 
 #endif

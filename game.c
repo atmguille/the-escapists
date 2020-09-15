@@ -180,8 +180,8 @@ Status game_start() {
     fscanf(f, "%hd", &game->nMinigames);
     assert(game->nMinigames <= MAX_MINIGAMES);
     for (i = 0; i < game->nMinigames; i++) {
-        fscanf(f, "%s %hd %hd %hd %hd %s %s %s %hd %ld %d", game->minigames[i].pitcherName, &game->minigames[i].pitcherX, &game->minigames[i].pitcherY, &game->minigames[i].pitcherMax, &game->minigames[i].pitcherMin, game->minigames[i].objectName, game->minigames[i].map_name, game->minigames[i].nextMap, &game->minigames[i].nThreads, &game->minigames[i].objectSpeed, &temp);
-        game->minigames[i].isPitcherDead = (temp == 1);
+        fscanf(f, "%s %hd %hd %hd %hd %s %s %s %hd %ld %d", game->minigames[i].pitcher_name, &game->minigames[i].pitcher_x, &game->minigames[i].pitcher_y, &game->minigames[i].pitcher_max_y, &game->minigames[i].pitcher_min_y, game->minigames[i].object_name, game->minigames[i].map_name, game->minigames[i].next_map, &game->minigames[i].num_threads, &game->minigames[i].object_speed, &temp);
+        game->minigames[i].is_pitcher_dead = (temp == 1);
     }
     fclose(f);
 
@@ -438,7 +438,7 @@ bool _checkPin(Game *game, int pin) {
     return false;
 }
 
-void _changeMap(Game *game, ContiguousMap *contiguous_map) {
+void _change_map(Game *game, ContiguousMap *contiguous_map) {
     ContiguousMap *mapcpy;
     int i;
 
@@ -460,7 +460,7 @@ void _changeMap(Game *game, ContiguousMap *contiguous_map) {
     mapcpy->new_y = contiguous_map->new_y;
     
     for (i = 0; i < game->nMinigames; i++) {
-        if (strcmp(game->map->name, game->minigames[i].map_name) == 0 && minigame_isPlayerDead() == false) {
+        if (strcmp(game->map->name, game->minigames[i].map_name) == 0 && minigame_is_player_dead() == false) {
             minigame_destroy();
             /* There's only one minigame at the same time */
             break;
@@ -532,19 +532,19 @@ void _move(Game *game, MOVEMENTS mov) {
 
     /* Check if we have to move to one of the contiguous maps, checking first if we have permission */
     if ((contiguous_map = map_get_contiguous_map(new_x1, new_y1, game->map)) != NULL) {
-        _changeMap(game, contiguous_map);
+        _change_map(game, contiguous_map);
         return;
     }  
     if ((contiguous_map = map_get_contiguous_map(new_x2, new_y1, game->map)) != NULL) {
-        _changeMap(game, contiguous_map);
+        _change_map(game, contiguous_map);
         return;
     }  
     if ((contiguous_map = map_get_contiguous_map(new_x1, new_y2, game->map)) != NULL) {
-        _changeMap(game, contiguous_map);
+        _change_map(game, contiguous_map);
         return;
     }  
     if ((contiguous_map = map_get_contiguous_map(new_x2, new_y2, game->map)) != NULL) {
-        _changeMap(game, contiguous_map);
+        _change_map(game, contiguous_map);
         return;
     }
     /* Update players' position. If we don't finally move, we'll restore them, but this way it is easier to pass parameters
@@ -611,17 +611,17 @@ void game_get_input(Game *game) {
         /* After hours trying to figure out how to know asynchronously when the player died because of and object thrown at him (minigame)
          * we gave up and went with this synchronous approach, where we ask the player to press a key. 
          * We check if c is 'q' so we don't load a map if we are going to destroy it afterwards */
-        if (minigame_isPlayerDead() == true && c != 'q' && c != 'Q' && c != 3) {
+        if (minigame_is_player_dead() == true && c != 'q' && c != 'Q' && c != 3) {
             for (i = 0; i < game->nMinigames; i++) {
                 /* If we are in a minigame map, we change map */
                 if (strcmp(game->map->name, game->minigames[i].map_name) == 0) {
-                    ContiguousMap nextMap;
-                    strcpy(nextMap.name, game->minigames[i].nextMap);
-                    nextMap.new_x = DEFAULT_INITIAL_POS;
-                    nextMap.new_y = DEFAULT_INITIAL_POS;
-                    nextMap.pin  = 0; /* If we don't set the pin to 0, _changeMap will request one */
+                    ContiguousMap next_map;
+                    strcpy(next_map.name, game->minigames[i].next_map);
+                    next_map.new_x = DEFAULT_INITIAL_POS;
+                    next_map.new_y = DEFAULT_INITIAL_POS;
+                    next_map.pin  = 0; /* If we don't set the pin to 0, _change_map will request one */
                     minigame_destroy();
-                    _changeMap(game, &nextMap);
+                    _change_map(game, &next_map);
                     break;
                 }
             }                
