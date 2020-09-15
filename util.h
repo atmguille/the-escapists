@@ -11,9 +11,9 @@
 #define PRINT_TIME 8
 #define LOG_FILE "log.txt"
 
-#define CLEAR_SCREEN "\e[1;1H\e[2J"
-#define HIDE_CURSOR "\e[?25l"
-#define SHOW_CURSOR "\e[?25h"
+#define CLEAR_SCREEN "\x1B[1;1H\x1B[2J"
+#define HIDE_CURSOR "\x1B[?25l"
+#define SHOW_CURSOR "\x1B[?25h"
 
 #include <stdio.h>
 #include <assert.h>
