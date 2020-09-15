@@ -127,10 +127,8 @@ Map *map_ini(const char *name, Player *player, Entity *objects, unsigned short n
 
 ContiguousMap *map_get_contiguous_map(int x, int y, Map *map) {
     /* We are going to return a copy, so we can destroy the old game securely */
-    char *name;
     int i;
     unsigned short r, g, b;
-    ContiguousMap *mapcpy;    
 
     r = map->limits->rgb[y][x].red;
     g = map->limits->rgb[y][x].green;

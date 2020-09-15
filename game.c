@@ -327,7 +327,7 @@ void _obj_catch(Game *game) {
 
 void _character_greeting(Game *game) {
     char msg[MSG_LEN];
-    int i, j, pos;
+    int pos;
     
     for (pos = 0; pos < game->num_characters; pos++) {
         if (game->characters[pos].mbool == false && strcmp(game->map->name, game->characters[pos].map_name) == 0 && _is_close(game->player, &(game->characters[pos]), 7)) {
@@ -603,7 +603,6 @@ void _move(Game *game, MOVEMENTS mov) {
 
 void game_get_input(Game *game) {
     char c;
-    char string[100];
     int i;
 
     do {
