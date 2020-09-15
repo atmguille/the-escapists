@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -g
+CFLAGS= -O3 -Wall -pedantic
 
 all: main
 
