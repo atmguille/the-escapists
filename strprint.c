@@ -4,18 +4,18 @@
 #define PADDING 3
 #define LINE_SPACING 2
 #define MAX_ROWS 2
-#define BUBBLE_HEIGTH MAX_ROWS*LETTER_HEIGTH + 2*PADDING + (MAX_ROWS - 1)*LINE_SPACING
+#define BUBBLE_HEIGHT MAX_ROWS*LETTER_HEIGHT + 2*PADDING + (MAX_ROWS - 1)*LINE_SPACING
 
-int globalSecs;
-char printedSentece[MSG_LEN] = "";
-pthread_t sleepTimer;
+int global_secs;
+char printed_sentence[MSG_LEN] = "";
+pthread_t sleep_timer;
 
-void cleanText() {
+void clean_text() {
     int i = 0, j;
 
     pthread_mutex_lock(&semaphore);
-    moveCursorTo(0, BACKGROUND_HEIGTH);
-    for (; i < BUBBLE_HEIGTH; i++) {
+    move_cursor_to(0, BACKGROUND_HEIGHT);
+    for (; i < BUBBLE_HEIGHT; i++) {
         for (j = 0; j < BACKGROUND_WIDTH; j++)
             printf(COLOR_SPACE(255, 255, 255));
         printf(ANSI_COLOR_RESET "\n");
@@ -23,7 +23,7 @@ void cleanText() {
     pthread_mutex_unlock(&semaphore);
 }
 
-void strprint_PIN(char* str) {
+void strprint_PIN(char *str) {
     /* We assume the input is correct (_checkPin will handle that), that is, only up to 4 numbers */
     const int digits = 4;
     /* We tried to do posX[digits] but it only compiles in Mac, not in Linux */
@@ -32,7 +32,7 @@ void strprint_PIN(char* str) {
     unsigned short i = 0;
     unsigned short x, y;
     char filename[MAX_FILENAME];
-    Image* image;
+    Image *image;
 
     /* Print the string passed */
     while (*str != '\0') {
@@ -51,7 +51,7 @@ void strprint_PIN(char* str) {
     pthread_mutex_lock(&semaphore);
     for(; i < digits; i++) {
         for (y = 0; y < 7; y++) {
-            moveCursorTo(posX[i], posY + y);
+            move_cursor_to(posX[i], posY + y);
             for (x = 0; x < 4; x++) {
                 printf(COLOR_SPACE(255, 255, 255));
             }
@@ -60,11 +60,11 @@ void strprint_PIN(char* str) {
     pthread_mutex_unlock(&semaphore);
 }
 
-Status _strprint(char* str) {
+Status _strprint(char *str) {
     char filename[MAX_FILENAME];
-    Image* image;
+    Image *image;
     int x = PADDING;
-    int y = BACKGROUND_HEIGTH + PADDING;
+    int y = BACKGROUND_HEIGHT + PADDING;
     int row = 0;
     char c;
     
@@ -72,10 +72,10 @@ Status _strprint(char* str) {
         return ERROR;
     
     /* If we are trying to print the same sentece that it is printed, we won't */
-    if (strcmp(str, printedSentece) == 0)
+    if (strcmp(str, printed_sentence) == 0)
         return OK;
-    strcpy(printedSentece, str);
-    cleanText();
+    strcpy(printed_sentence, str);
+    clean_text();
     while (*str != '\0') {
         if ((*str >= 'A' && *str <= 'Z') || (*str >= 'a' && *str <= 'z') || *str == '!' || *str == '?' || *str == ',' || *str == '.' || *str == ':' || *str == '\'' || (*str >= '0' && *str <= '9')) {
             /* Print lowercase uppercase */
@@ -96,7 +96,7 @@ Status _strprint(char* str) {
             /* Check if the letter fits in, if it doesn't continue on the next line */
             if (x + image->width + PADDING > BACKGROUND_WIDTH) {
                 x = PADDING;
-                y += LETTER_HEIGTH + LINE_SPACING;
+                y += LETTER_HEIGHT + LINE_SPACING;
                 row++;
                 image_free(image);
                 /* Exit if no more rows can fit in (it is an ERROR, but we are not going to check it)
@@ -114,7 +114,7 @@ Status _strprint(char* str) {
             x += 4;
         } else if (*str == '\n') {
             x = PADDING;
-            y += LETTER_HEIGTH + LINE_SPACING;
+            y += LETTER_HEIGHT + LINE_SPACING;
             row++;
             /* Exit if no more rows can fit in (it is an ERROR, but we are not going to check it)
              * This way the code in game.c for allowing map changes is nicer */
@@ -127,32 +127,32 @@ Status _strprint(char* str) {
     return OK;
 }
 
-Status strprint(char* str) {
-    /* Cancel the previous sleepTimer, if there's one */
-    pthread_cancel(sleepTimer);
+Status strprint(char *str) {
+    /* Cancel the previous sleep_timer, if there's one */
+    pthread_cancel(sleep_timer);
 
     return _strprint(str);
 }
 
-void* _wait(void* secs) {
+void *_wait(void *secs) {
     sleep(*((int *)secs));
-    cleanText();
-    printedSentece[0] = '\0';
+    clean_text();
+    printed_sentence[0] = '\0';
     return NULL;
 }
 
 
-Status strprint_time(char* str, int secs) {
+Status strprint_time(char *str, int secs) {
     /* If we don't copy secs to a global variable, it will get destroyed by the time we want to use it */
-    globalSecs = secs;
+    global_secs = secs;
 
     /* If we want to print the same sentence, we won't, we'll just reset the sleep timer (strprint won't print anything) */
     if (_strprint(str) == ERROR)
         return ERROR;
-    /* Cancel the previous sleepTimer, if there's one */
-    pthread_cancel(sleepTimer);
+    /* Cancel the previous sleep_timer, if there's one */
+    pthread_cancel(sleep_timer);
     /* Spawn a new thread */
-    pthread_create(&sleepTimer, NULL, _wait, &globalSecs);
+    pthread_create(&sleep_timer, NULL, _wait, &global_secs);
     
     return OK;
 }

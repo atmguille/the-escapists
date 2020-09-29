@@ -1,9 +1,9 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#define BACKGROUND_HEIGTH 150
+#define BACKGROUND_HEIGHT 150
 #define BACKGROUND_WIDTH  240
-#define LETTER_HEIGTH 6
+#define LETTER_HEIGHT 6
 #define MAP_NAME_LEN 32
 #define ENTITY_NAME_LEN 32
 #define DEFAULT_INITIAL_POS -1
@@ -11,16 +11,16 @@
 #define PRINT_TIME 8
 #define LOG_FILE "log.txt"
 
-#define CLEAR_SCREEN "\e[1;1H\e[2J"
-#define HIDE_CURSOR "\e[?25l"
-#define SHOW_CURSOR "\e[?25h"
+#define CLEAR_SCREEN "\x1B[1;1H\x1B[2J"
+#define HIDE_CURSOR "\x1B[?25l"
+#define SHOW_CURSOR "\x1B[?25h"
 
 #include <stdio.h>
 #include <assert.h>
 #include <pthread.h>
+#include <stdbool.h>
 
-typedef enum {FALSE, TRUE} Bool;
-typedef enum {ERROR, OK}   Status;
+typedef enum {ERROR, OK} Status;
 
 typedef struct {
     unsigned short red;
@@ -30,9 +30,9 @@ typedef struct {
 
 pthread_mutex_t semaphore;
 
-void moveCursorTo(int x, int y);
+void move_cursor_to(int x, int y);
 int distance(int x1, int y1, int x2, int y2);
-void log_str(char* str);
+void log_str(char *str);
 void log_int(int n);
 
 #endif

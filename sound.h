@@ -19,8 +19,7 @@
 #define KILL_PATH "Sounds/kill.wav"
 #define THROW_PATH "Sounds/throw.wav"
 
-int play_sound(const char* path);
+int play_sound(const char *path);
 void stop_sound(int pid);
 
 #endif
-
