@@ -34,8 +34,8 @@ In the process, the player can move around the prison using the arrow keys, chan
 
 To advance in the game, some challenges need to be completed, but do not worry, the player is guided by the comments found at the bottom of the screen. Some examples of these challenges are looking for hidden passwords, discovering hidden rooms, collecting objects, fighting against inmates and guards, ... Moreover, the character can die, so be very careful! Here are two examples of the most risky challenges, which are run in separate threads:
 
-* ![](Screenshots/hamburguers.gif)
-* ![](Screenshots/fireballs.gif)
+![](Screenshots/hamburguers.gif)
+![](Screenshots/fireballs.gif)
 
 Furthermore, this adventure is accompanied with a selection of sounds, whenever the character catches an object, kills another character, crosses a locked door or reaches the final map!
 
