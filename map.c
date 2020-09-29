@@ -4,7 +4,6 @@ Map* map_ini(const char* name, Player* player, Entity* objects, unsigned short n
     FILE* f;
     Map* map;
     int i;
-    int j = 0;
     unsigned short dummy;
     char dummychar;
     char path[MAP_NAME_LEN + 21];
@@ -77,8 +76,7 @@ Map* map_ini(const char* name, Player* player, Entity* objects, unsigned short n
     }
 
     /* Scan initial sentence. The dummychar reads the \n, needed to do the following:
-     * It reads until a " is found. We need that to be able to read the whole sentence, including spaces
-     * TODO: parece un poco cutre, pero funciona... */
+     * It reads until a " is found. We need that to be able to read the whole sentence, including spaces */
     fscanf(f, "%c%[^\"]%*c", &dummychar, map->initialSentence);
 
     /* Scan sentences to print */
@@ -96,7 +94,7 @@ Map* map_ini(const char* name, Player* player, Entity* objects, unsigned short n
         }
 
         /* Since we are not going to read more from the file it is no neccessary to keep track of the
-        * number of fields read. We check it anyway just in case we want to read more in a future */
+         * number of fields read. We check it anyway just in case we want to read more in a future */
         i = 0;
         while (i < map->nSentences && fscanf(f, "%c %[^\"]%*c %hd %hd %hd %s", &dummychar, map->sentences[i].string, 
             &(map->sentences[i].colorCode.red), &(map->sentences[i].colorCode.green), &(map->sentences[i].colorCode.blue), 
@@ -127,11 +125,9 @@ Map* map_ini(const char* name, Player* player, Entity* objects, unsigned short n
 }
 
 ContiguousMap* map_getContiguousMap(int x, int y, Map* map) {
-    /* We are going to return a copy, so we can destroy the old game securely */
-    char* name;
+    /* We are going to return the memory direction, to do a copy outside */
     int i;
-    unsigned short r, g, b;
-    ContiguousMap* mapcpy;    
+    unsigned short r, g, b;    
 
     r = map->limits->rgb[y][x].red;
     g = map->limits->rgb[y][x].green;

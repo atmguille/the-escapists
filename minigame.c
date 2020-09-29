@@ -53,6 +53,9 @@ void* _throw(void* args) {
     unsigned short y = ((ThrowArgs *)args)->y;
     int i, j;
 
+    /* Play the throw sound */
+    play_sound(THROW_PATH);
+
     /* We'll stop whenever the caller wants or if the object reaches the end of the screen */
     while (x > 0 && ((ThrowArgs *)args)->is_running == TRUE) {
         /* If the user hit an object, exit (not only this game but the minigame) */
@@ -122,6 +125,7 @@ void* _minigame_launch(void* args) {
         if (_intersect(player, pitcher, pitcherX, pitcherY)) {
             minigameArgs.is_running = FALSE;
             minigameArgs.minigame->isPitcherDead = TRUE;
+            play_sound(KILL_PATH);
             break;
         }
         if (pitcherY >= minigameArgs.minigame->pitcherMax || pitcherY <= minigameArgs.minigame->pitcherMin) { 
@@ -147,12 +151,12 @@ void* _minigame_launch(void* args) {
                 count++;
         }
         pthread_mutex_lock(&semaphore);
-        if (direction == - 1) { //va para arriba
+        if (direction == - 1) { /* Go up */
             moveCursorTo(pitcherX, pitcherY + pitcher->heigth -1);
                 for (i = 0; i < pitcher->width; i++) {
                     printf(COLOR_SPACE(background->rgb[pitcherY + pitcher->heigth -1][pitcherX + i].red, background->rgb[pitcherY + pitcher->heigth - 1][pitcherX + i].green, background->rgb[pitcherY + pitcher->heigth -1][pitcherX + i].blue));
                 }
-        } else { //va para abajo
+        } else { /* Go down */
             moveCursorTo(pitcherX, pitcherY);
             for (i = 0; i < pitcher->width; i++) {
                 printf(COLOR_SPACE(background->rgb[pitcherY][pitcherX + i].red, background->rgb[pitcherY][pitcherX + i].green, background->rgb[pitcherY][pitcherX + i].blue));

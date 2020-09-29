@@ -15,8 +15,12 @@
 #define DEATH_PATH "Sounds/death.wav"
 #define OBJECTCATCH_PATH "Sounds/objectcatch.wav"
 #define LASTSONG_PATH "Sounds/libre.wav"
+#define BEGINNING_PATH "Sounds/beginning.wav"
+#define KILL_PATH "Sounds/kill.wav"
+#define THROW_PATH "Sounds/throw.wav"
 
 int play_sound(const char* path);
 void stop_sound(int pid);
 
 #endif
+

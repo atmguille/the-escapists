@@ -12,7 +12,7 @@ typedef enum {UP, DOWN, RIGHT, LEFT} MOVEMENTS;
 
 /* Prints the initial cover. The bool beginning indicates which string to print: beggining or end
  * The return bool indicates the calling function whether we want to exit or not */
-Bool _print_cover(Game* game, Bool beggining) {
+Bool _print_cover(Game* game, Bool beginning) {
     char c;
     Image* cover = image_ini(COVER_PATH);
 
@@ -23,14 +23,18 @@ Bool _print_cover(Game* game, Bool beggining) {
     image_print(cover, 0, 0);
     image_free(cover);
 
-    if (beggining == TRUE)
+    if (beginning == TRUE) {
         strprint("Welcome!\nPlease, press any key to start playing");
+        game->pid = play_sound(BEGINNING_PATH);
+    }
     else
         strprint("Thanks for playing!\nWe hope you enjoyed. Press any key to exit");
     c = getchar();
+    /* We kill the sound */
+    stop_sound(game->pid);
     /* See game_get_input */
-    /* We only care if the user hits the Q if it's the beggining */
-    if ((c == 'q' || c == 'Q' || c == 3) && (beggining == TRUE)) {
+    /* We only care if the user hits the Q if it's the beginning */
+    if ((c == 'q' || c == 'Q' || c == 3) && (beginning == TRUE)) {
         return TRUE;
     }
 
@@ -323,11 +327,11 @@ void _obj_catch(Game* game) {
 
 void _character_greeting(Game* game) {
     char msg[MSG_LEN];
-    int i, j, pos;
+    int pos;
     
     for (pos = 0; pos < game->nCharacters; pos++) {
         if (game->characters[pos].mBool == FALSE && strcmp(game->map->name, game->characters[pos].mapName) == 0 && _is_close(game->player, &(game->characters[pos]), 7)) {
-            sprintf(msg, "%s: %s", game->characters[pos].name, game->characters[pos].description); //TODO: tenemos dos puntos y comillas??
+            sprintf(msg, "%s: %s", game->characters[pos].name, game->characters[pos].description);
             strprint_time(msg, PRINT_TIME);
         }
     }
@@ -339,8 +343,9 @@ Bool _character_kill(Game* game) {
     int i, j, pos;
     
     for (pos = 0; pos < game->nCharacters; pos++) {
-        if (game->characters[pos].mBool == FALSE && strcmp(game->map->name, game->characters[pos].mapName) == 0 && _is_close(game->player, &(game->characters[pos]), 1)) { //TODO: condición para matarlo
+        if (game->characters[pos].mBool == FALSE && strcmp(game->map->name, game->characters[pos].mapName) == 0 && _is_close(game->player, &(game->characters[pos]), 1)) {
             if (strcmp(game->characters[pos].name, "Policeman") == 0 && player_has(game->map, "Knife")) {                                                        
+                play_sound(KILL_PATH);
                 sprintf(msg, "Great, you killed the %s", game->characters[pos].name);
                 strprint_time(msg, PRINT_TIME);
                 game->characters[pos].mBool = TRUE;
@@ -599,7 +604,6 @@ void _move(Game* game, MOVEMENTS mov) {
 
 void game_get_input(Game* game) {
     char c;
-    char string[100];
     int i;
 
     do {
