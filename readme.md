@@ -2,7 +2,7 @@
 
 This game was developed for the PPROG (Programming Project) course at UAM by [Guillermo García Cobo](https://github.com/atmguille), [Jesús Morato Martín](https://github.com/mapachepurpuratouris) and me. Since the game had to be terminal based we decided to print spaces as if they were pixels. 
 
-![](Screenshots/Welcome Screen.png)
+![](Screenshots/Welcome_Screen.png)
 
 ## Requirements
 
