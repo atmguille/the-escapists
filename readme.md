@@ -1,6 +1,6 @@
 # The Escapists
 
-This game was developed for the PPROG (Programming Project) course at UAM by [Guillermo García Cobo](https://github.com/atmguille), [Jesús Morato Martín](https://github.com/mapachepurpuratouris) and me. Since the game had to be terminal based we decided to print spaces as if they were pixels. 
+This game was developed for the PPROG (Programming Project) course at UAM by [Daniel Gallo Fernández](https://github.com/daniel-gallo), [Jesús Morato Martín](https://github.com/mapachepurpuratouris) and me. Since the game had to be terminal based we decided to print spaces as if they were pixels. 
 
 ![](Screenshots/Welcome_Screen.png)
 
@@ -42,3 +42,5 @@ Furthermore, this adventure is accompanied with a selection of sounds, whenever 
 We hope you enjoy the game and that, sooner or later, you reach this final map.
 
 ![](Screenshots/Finish.png)
+
+_Note_: the main part of this project was developed without using git, and that is the code pushed under "Initial commit"
